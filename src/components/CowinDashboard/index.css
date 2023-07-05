@@ -1,0 +1,26 @@
+/* Write your CSS here */
+.bg-container {
+  min-height: 100vh;
+  flex-grow: 1;
+  background-color: #161625;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.firstDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #2cc6c6;
+  width: 80%;
+}
+.proper {
+  width: 50px;
+  height: 50px;
+  margin-right: 30px;
+}
+.secondDiv {
+  color: #ffffff;
+  width: 80%;
+}

@@ -1,0 +1,9 @@
+/* Write your CSS here */
+.barchartOuter {
+  width: 80%;
+  background-color: red;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
