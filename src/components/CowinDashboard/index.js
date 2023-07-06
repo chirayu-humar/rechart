@@ -3,9 +3,11 @@ import './index.css'
 import Loader from 'react-loader-spinner'
 import {Component} from 'react'
 import VaccinationCoverage from '../VaccinationCoverage'
+import VaccinationByGender from '../VaccinationByGender'
+import VaccinationByAge from '../VaccinationByAge'
 
 class CowinDashboard extends Component {
-  state = {isLoading: false}
+  state = {isLoading: true, isReqSuccess: false}
 
   componentDidMount = async () => {
     this.fetchTheData()
@@ -24,24 +26,29 @@ class CowinDashboard extends Component {
     this.setState({
       isLoading: true,
     })
-    const options = {
-      method: 'GET',
-    }
     const url = 'https://apis.ccbp.in/covid-vaccination-data'
-    const response = await fetch(url, options)
-    const jsonData = await response.json()
-    console.log(jsonData)
-    const lastDaysVaccination = jsonData.last_7_days_vaccination
-    const vaccinationByAge = jsonData.vaccination_by_age
-    const vaccinationByGender = jsonData.vaccination_by_gender
-    this.setState({
-      lastDaysVaccination: lastDaysVaccination.map(eachItem =>
-        this.changeVaccinationCoverage(eachItem),
-      ),
-      vaccinationByGender,
-      vaccinationByAge,
-      isLoading: false,
-    })
+    const response = await fetch(url)
+    if (response.ok) {
+      const jsonData = await response.json()
+      console.log(jsonData)
+      const lastDaysVaccination = jsonData.last_7_days_vaccination
+      const vaccinationByAge = jsonData.vaccination_by_age
+      const vaccinationByGender = jsonData.vaccination_by_gender
+      this.setState({
+        lastDaysVaccination: lastDaysVaccination.map(eachItem =>
+          this.changeVaccinationCoverage(eachItem),
+        ),
+        vaccinationByGender,
+        vaccinationByAge,
+        isLoading: false,
+        isReqSuccess: true,
+      })
+    } else {
+      this.setState({
+        isLoading: false,
+        isReqSuccess: false,
+      })
+    }
   }
 
   render() {
@@ -50,6 +57,7 @@ class CowinDashboard extends Component {
       lastDaysVaccination,
       vaccinationByGender,
       vaccinationByAge,
+      isReqSuccess,
     } = this.state
     console.log(lastDaysVaccination)
     return (
@@ -57,6 +65,7 @@ class CowinDashboard extends Component {
         {/* first div */}
         <div className="firstDiv">
           <img
+            alt="website logo"
             className="proper"
             src="https://assets.ccbp.in/frontend/react-js/cowin-logo.png"
           />
@@ -73,10 +82,28 @@ class CowinDashboard extends Component {
           </div>
         )}
         {/* fourth div */}
-        <VaccinationCoverage lastDaysVaccination={lastDaysVaccination} />
+        {isReqSuccess && (
+          <VaccinationCoverage lastDaysVaccination={lastDaysVaccination} />
+        )}
         {/* fifth div */}
+        {isReqSuccess && (
+          <VaccinationByGender vaccinationByGender={vaccinationByGender} />
+        )}
         {/* sixth div */}
+        {isReqSuccess && (
+          <VaccinationByAge vaccinationByAge={vaccinationByAge} />
+        )}
         {/* seventh div */}
+        {!isReqSuccess && !isLoading && (
+          <div>
+            <img
+              alt="failure view"
+              src="https://assets.ccbp.in/frontend/react-js/api-failure-view.png"
+            />
+            <h1>Something went wrong</h1>
+          </div>
+        )}
+        {/* eighth div */}
       </div>
     )
   }

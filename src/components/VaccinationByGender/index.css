@@ -1,1 +1,8 @@
 /* Write your CSS here */
+.GenderOuter {
+  width: 80%;
+  background-color: red;
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+}

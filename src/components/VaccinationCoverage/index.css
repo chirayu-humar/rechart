@@ -4,6 +4,7 @@
   background-color: red;
   color: white;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
+  padding: 30px;
 }

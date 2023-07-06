@@ -21,8 +21,11 @@ const VaccinationCoverage = props => {
 
   return (
     <div className="barchartOuter">
-      <ResponsiveContainer>
+      <h1>Vaccination Coverage</h1>
+      <div>
         <BarChart
+          width={800}
+          height={300}
           data={lastDaysVaccination}
           margin={{
             top: 5,
@@ -31,14 +34,14 @@ const VaccinationCoverage = props => {
           <XAxis
             dataKey="vaccineDate"
             tick={{
-              stroke: 'gray',
+              stroke: 'white',
               strokeWidth: 1,
             }}
           />
           <YAxis
             tickFormatter={DataFormatter}
             tick={{
-              stroke: 'gray',
+              stroke: 'white',
               strokeWidth: 0,
             }}
           />
@@ -50,7 +53,7 @@ const VaccinationCoverage = props => {
           <Bar dataKey="dose1" name="dose1" fill="#1f77b4" barSize="20%" />
           <Bar dataKey="dose2" name="dose2" fill="#fd7f0e" barSize="20%" />
         </BarChart>
-      </ResponsiveContainer>
+      </div>
     </div>
   )
 }
